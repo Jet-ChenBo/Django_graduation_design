@@ -18,7 +18,6 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^tinymce/', include('tinymce.urls')),  # 富文本编辑器
     url(r'', include(('goods.urls', 'goods'), namespace='goods')),  # 商品模块
     url(r'^user/', include(('user.urls', 'user'), namespace='user')), # 用户模块
 ]

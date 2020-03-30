@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user', # 用户模块
+    'tinymce',  # 富文本
+    'user',  # 用户模块
+    'goods',  # 商品模块
 ]
 
 MIDDLEWARE = [
@@ -139,3 +141,10 @@ EMAIL_HOST_USER = '15281678200@163.com'
 EMAIL_HOST_PASSWORD = 'cb27712760'
 # 收件人看到的发件人
 EMAIL_FROM = '生鲜配送<15281678200@163.com>'
+
+#  富文本配置
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'width': 600,
+    'height': 400,
+}

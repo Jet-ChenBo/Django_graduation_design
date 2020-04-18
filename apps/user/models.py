@@ -5,6 +5,7 @@ from db.base_model import BaseModel
 # Create your models here.
 class User(AbstractUser, BaseModel):
     '''用户模型类'''
+    points = models.IntegerField(default=0, verbose_name='用户积分')
 
     class Meta:
         db_table = 'fd_user'

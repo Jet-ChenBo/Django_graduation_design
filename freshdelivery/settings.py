@@ -148,7 +148,7 @@ DEFAULT_FILE_STORAGE = 'util.fdfs_storage.FDFSStorage'
 CACHES = {
     "default":{
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/9", # 使用9号数据库
+        "LOCATION": "redis://127.0.0.1:6379/6", # 使用9号数据库
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }

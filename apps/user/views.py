@@ -104,7 +104,7 @@ class LoginView(View):
         password = request.POST.get('pwd')
         remember = request.POST.get('remember')
 
-        if not all((username, password, remember)):
+        if not all((username, password)):
             return render(request, 'login.html', {'errmsg': '数据不完整'})
 
         # 用户认证

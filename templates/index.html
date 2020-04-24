@@ -1,285 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}首页{% endblock title %}
+{% block jsfiles %}
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/static/js/slide.js"></script>
+{% endblock jsfiles%}
 
-<body>
-	<div class="navbar_con">
-		<div class="navbar clearfix">
-			<div class="subnav_con fl">
-				<h1>全部商品分类</h1>
-				<ul class="subnav">
-					<li><img /><a href="#model01" class="fruit">新鲜水果</a></li>
-					<li><img /><a href="#model02" class="seafood">海鲜水产</a></li>
-					<li><img /><a href="#model03" class="meet">猪牛羊肉</a></li>
-					<li><img /><a href="#model04" class="egg">禽类蛋品</a></li>
-					<li><img /><a href="#model05" class="vegetables">新鲜蔬菜</a></li>
-					<li><img /><a href="#model06" class="ice">速冻食品</a></li>
-				</ul>
-			</div>
-			<ul class="navlist fl">
-				<li><a href="">首页</a></li>
-				<li class="interval">|</li>
-				<li><a href="">手机生鲜</a></li>
-				<li class="interval">|</li>
-				<li><a href="">抽奖</a></li>
-			</ul>
+{% block goods_type %}
+	{% for type in types %}
+	<li><img src="{{ type.image.url }}" alt="商品种类图片"><a href="#model0{{ forloop.counter }}">{{ type.name }}</a></li>
+	{% endfor %}
+{% endblock goods_type %}
 
-		</div>
-	</div>
-
+{% block body %}
 	<div class="center_con clearfix">
 		<div class="slide">
 			<div class="prev"></div>
 			<div class="next"></div>
 			<ul class="points"></ul>
 			<ul class="slide_pics">
-				<li><img src="images/slide.jpg" alt="幻灯片"></li>
-				<li><img src="images/slide02.jpg" alt="幻灯片"></li>
-				<li><img src="images/slide03.jpg" alt="幻灯片"></li>
-				<li><img src="images/slide04.jpg" alt="幻灯片"></li>
+				{# 幻灯片#}
+				{% for banner in goods_banners %}
+				<li><a href="#"><img src="{{ banner.image.url }}" alt="幻灯片"></a></li>
+				{% endfor %}
 			</ul>
-
 		</div>
 	</div>
 
-	<div class="lists">
-		<div class="line">
-			<div class="list_model">
-				<div class="list_title clearfix">
-					<h3 class="fl" id="model01">新鲜水果</h3>
-					<div class="subtitle fl">
-						<span>|</span>
-						<a href="#">鲜芒</a>
-						<a href="#">加州提子</a>
-						<a href="#">亚马逊牛油果</a>
-					</div>
-					<a href="#" class="goods_more fr" id="fruit_more">查看更多 &lt;</a>
-				</div>
-
-				<div class="goods_con clearfix">
-					<!-- <div class="goods_banner fl"><img src="images/banner01.jpg"></div> -->
-					<ul class="goods_list fl">
-						<li>
-							<a href="#"><img src="images/goods/one.png"></a>
-							<div class="name"><a href="#">草莓</a></div>
-							<div class="introduce"><span>超级好吃的大草莓超级好吃的大草莓超级好吃</span></div>
-							<div class="sale">销量：500</div>
-						</li>
-						<li>
-							<a href="#"><img src="images/goods/two.png"></a>
-							<div class="name"><a href="#">葡萄</a></div>
-							<div class="introduce"><span>超级好吃的大葡萄</span></div>
-							<div class="sale">销量：50</div>
-						</li>
-						<li>
-							<a href="#"><img src="images/goods/goods001.jpg"></a>
-							<div class="name"><a href="#">柠檬</a></div>
-							<div class="introduce"><span>超级好吃的大葡萄</span></div>
-							<div class="sale">销量：50</div>
-						</li>
-						<li>
-							<a href="#"><img src="images/goods/goods012.jpg"></a>
-							<div class="name"><a href="#">奇异果</a></div>
-							<div class="introduce"><span>超级好吃的大葡萄</span></div>
-							<div class="sale">销量：500</div>
-						</li>
-					</ul>
-				</div>
+	{% for type in types %}
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model0{{ forloop.counter }}">{{ type.name }}</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{% for banner in type.title_banners %}
+				<a href="#">{{ banner.sku.name }}</a>
+				{% endfor %}
 			</div>
-
-			<div class="list_model">
-				<div class="list_title clearfix">
-					<h3 class="fl" id="model02">海鲜水产</h3>
-					<div class="subtitle fl">
-						<span>|</span>
-						<a href="#">河虾</a>
-						<a href="#">扇贝</a>
-					</div>
-					<a href="#" class="goods_more fr">查看更多 &lt;</a>
-				</div>
-
-				<div class="goods_con clearfix">
-					<!-- <div class="goods_banner fl"><img src="images/banner02.jpg"></div> -->
-					<ul class="goods_list fl">
-						<li>
-							<h4><a href="#">青岛野生海捕大青虾</a></h4>
-							<a href="#"><img src="images/goods/goods018.jpg"></a>
-							<div class="prize">¥ 48.00</div>
-						</li>
-						<li>
-							<h4><a href="#">扇贝</a></h4>
-							<a href="#"><img src="images/goods/goods019.jpg"></a>
-							<div class="prize">¥ 46.00</div>
-						</li>
-						<li>
-							<h4><a href="#">冷冻秋刀鱼</a></h4>
-							<a href="#"><img src="images/goods/goods020.jpg"></a>
-							<div class="prize">¥ 19.00</div>
-						</li>
-						<li>
-							<h4><a href="#">基围虾</a></h4>
-							<a href="#"><img src="images/goods/goods021.jpg"></a>
-							<div class="prize">¥ 25.00</div>
-						</li>
-					</ul>
-				</div>
-			</div>
+			<a href="#" class="goods_more fr" id="fruit_more">查看更多 &lt;</a>
 		</div>
-		<div class="line">
-			<div class="list_model">
-				<div class="list_title clearfix">
-					<h3 class="fl" id="model03">猪牛羊肉</h3>
-					<div class="subtitle fl">
-						<span>|</span>
-						<a href="#">鲜芒</a>
-						<a href="#">加州提子</a>
-						<a href="#">亚马逊牛油果</a>
-					</div>
-					<a href="#" class="goods_more fr">查看更多 &lt;</a>
-				</div>
 
-				<div class="goods_con clearfix">
-					<!-- <div class="goods_banner fl"><img src="images/banner03.jpg"></div> -->
-					<ul class="goods_list fl">
-						<li>
-							<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="list_model">
-				<div class="list_title clearfix">
-					<h3 class="fl" id="model04">禽类蛋品</h3>
-					<div class="subtitle fl">
-						<span>|</span>
-						<a href="#">鲜芒</a>
-						<a href="#">加州提子</a>
-						<a href="#">亚马逊牛油果</a>
-					</div>
-					<a href="#" class="goods_more fr">查看更多 &lt;</a>
-				</div>
-
-				<div class="goods_con clearfix">
-					<!-- <div class="goods_banner fl"><img src="images/banner04.jpg"></div> -->
-					<ul class="goods_list fl">
-						<li>
-							<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="line">
-			<div class="list_model">
-				<div class="list_title clearfix">
-					<h3 class="fl" id="model05">新鲜蔬菜</h3>
-					<div class="subtitle fl">
-						<span>|</span>
-						<a href="#">鲜芒</a>
-						<a href="#">加州提子</a>
-						<a href="#">亚马逊牛油果</a>
-					</div>
-					<a href="#" class="goods_more fr">查看更多 &lt;</a>
-				</div>
-
-				<div class="goods_con clearfix">
-					<!-- <div class="goods_banner fl"><img src="images/banner05.jpg"></div> -->
-					<ul class="goods_list fl">
-						<li>
-							<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="list_model">
-				<div class="list_title clearfix">
-					<h3 class="fl" id="model06">速冻食品</h3>
-					<div class="subtitle fl">
-						<span>|</span>
-						<a href="#">鲜芒</a>
-						<a href="#">加州提子</a>
-						<a href="#">亚马逊牛油果</a>
-					</div>
-					<a href="#" class="goods_more fr">查看更多 &lt;</a>
-				</div>
-
-				<div class="goods_con clearfix">
-					<!-- <div class="goods_banner fl"><img src="images/banner06.jpg"></div> -->
-					<ul class="goods_list fl">
-						<li>
-							<h4><a href="#">维多利亚葡萄维多利亚葡萄维多利亚葡萄维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-						<li>
-							<h4><a href="#">维多利亚葡萄</a></h4>
-							<a href="#"><img src="images/goods.jpg"></a>
-							<div class="prize">¥ 38.00</div>
-						</li>
-					</ul>
-				</div>
-			</div>
+		<div class="goods_con clearfix">
+			<ul class="goods_list fl">
+				{% for banner in type.image_banners %}
+				<li>
+					<a href="#"><img src="{{ banner.sku.image.url }}"></a>
+					<div class="name"><a href="#">{{ banner.sku.name }}</a></div>
+					<div class="introduce"><span>{{ banner.sku.desc }}</span></div>
+					<div class="sale">销量：{{ banner.sku.sales }}</div>
+				</li>
+				{% endfor %}
+			</ul>
 		</div>
 	</div>
-</body>
-
-</html>
+	{% endfor %}
+{% endblock body%}

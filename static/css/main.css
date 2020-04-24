@@ -17,10 +17,6 @@ html,body{height:100%}
 	line-height:29px;
 }
 
-.login_info{
-	display:none;
-}
-
 .login_info em{color:#ff8800}
 
 .login_btn a,.user_link a{
@@ -47,16 +43,8 @@ html,body{height:100%}
 .navitems a{color:#fff;}
 .navitems ul .home,.navitems ul .set_user,.navitems ul .review,.navitems ul .message {float: left; margin-right:20px;position: relative;}
 .navitems ul .review{width: 50px;}
-.arrow{
-	background: url('../images/arrow_down.png');
-	background-size: 16px;
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-}
-.navitems ul .review:hover .review_list{
-	display: block;
-}
+.arrow{background: url('../images/arrow_down.png');background-size: 16px;display: inline-block;width: 16px;height: 16px;}
+.navitems ul .review:hover .review_list{display: block;}
 .navitems ul .review:hover .review_btn .arrow{
 	transition: 0.2s ease-in-out;
 	transform: rotate(180deg);
@@ -102,7 +90,6 @@ html,body{height:100%}
 .navbar_con{height:40px;border-bottom:2px solid #2f2f2f;}
 .navbar_con .navbar .subnav_con{display: inline-block;}
 .navbar{width:1200px;margin:0 auto;position: relative;}
-.navbar img{background-color: #39a93e; position: absolute; }
 .navbar h1{width:200px;height:40px;line-height:40px;text-align: center;font-size:14px;color:#fff;background-color:#2f2f2f; cursor: default;}
 
 .navbar .subnav_con{width:200px;height:40px;background-color:#2f2f2f;position:relative;cursor:pointer;}
@@ -131,7 +118,7 @@ html,body{height:100%}
 
 .subnav li a{display:block;height:44px;line-height:44px;text-indent:71px;font-size:14px;color:#333}
 .subnav li a:hover{color:#ff8800}
-.subnav li img{height: 30px;width:30px;position:absolute;left:20px;top:8px;}
+.subnav li img{height: 35px;width:35px;position:absolute;left:20px;top:3px;}
 
 .slide{width:1200px;height:426px;position: relative;overflow:hidden;}
 .slide .slide_pics{position:relative;left:0;top:0;width:1200px;height:426px;z-index: -1;}
@@ -148,8 +135,7 @@ html,body{height:100%}
 
 /* 商品列表样式 */
 
-.lists{width:1200px;margin: 0 auto;}
-.line{display: flex;flex-direction: row;justify-content: space-between;}
+.lists{width:1200px;margin: 0 auto;display: flex; flex-wrap: wrap;}
 .list_model{width:592px;height:680px;margin:15px 0 0;background-color: #fff;float: left; padding: 10px 20px;}
 .list_title{height:40px;}
 .list_title h3{height:40px;line-height:48px;font-size:20px;color:#37ab40;font-weight:bold;}

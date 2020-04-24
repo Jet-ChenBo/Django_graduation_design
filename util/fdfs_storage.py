@@ -2,7 +2,7 @@ from django.core.files.storage import Storage
 from fdfs_client.client import Fdfs_client
 
 class FDFSStorage(Storage):
-    '''FastDFS文件存储类'''
+    '''Fast DFS文件存储类'''
     def _open(self, name, mode='rb'):
         '''打开文件时使用'''
         pass
@@ -12,6 +12,7 @@ class FDFSStorage(Storage):
         # name是文件名字，content是包含文件内容的File对象
 
         client = Fdfs_client('/etc/fdfs/client.conf')
+       # client = Fdfs_client('./utils/client.conf')    两种都可以
 
         # 通过文件内容上传文件
         res = client.upload_by_buffer(content.read())

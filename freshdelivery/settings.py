@@ -140,3 +140,21 @@ EMAIL_HOST_USER = '15281678200@163.com'
 EMAIL_HOST_PASSWORD = 'cb27712760'
 # 收件人看到的发件人
 EMAIL_FROM = '生鲜配送<15281678200@163.com>'
+
+# 配置上传文件使用的类
+DEFAULT_FILE_STORAGE = 'util.fdfs_storage.FDFSStorage'
+
+# Django的缓存配置
+CACHES = {
+    "default":{
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/9", # 使用9号数据库
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# 配置session使用缓存
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"

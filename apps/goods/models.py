@@ -1,6 +1,5 @@
 from django.db import models
 from db.base_model import BaseModel
-from tinymce.models import HTMLField
 
 # Create your models here.
 class GoodsType(BaseModel):
@@ -69,6 +68,9 @@ class IndexGoodsBanner(BaseModel):
         verbose_name = '首页轮播商品'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return str(self.sku)
+
 
 class IndexTypeGoodsBanner(BaseModel):
     '''首页分类商品展示模型类'''
@@ -86,3 +88,7 @@ class IndexTypeGoodsBanner(BaseModel):
         db_table = 'fd_index_type_goods'
         verbose_name = "主页分类展示商品"
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str(self.sku)
+

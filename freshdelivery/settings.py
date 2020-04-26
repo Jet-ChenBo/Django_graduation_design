@@ -148,7 +148,7 @@ DEFAULT_FILE_STORAGE = 'util.fdfs_storage.FDFSStorage'
 CACHES = {
     "default":{
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/6", # 使用9号数据库
+        "LOCATION": "redis://127.0.0.1:6379/6", # 使用6号数据库
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -158,3 +158,6 @@ CACHES = {
 # 配置session使用缓存
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+
+# 配置未登录时跳转的地址
+LOGIN_URL='/user/login'

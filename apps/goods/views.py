@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import View
 from goods.models import GoodsType, IndexGoodsBanner, IndexTypeGoodsBanner
+from django_redis import get_redis_connection
 
 # /index
 class IndexView(View):
@@ -23,10 +24,25 @@ class IndexView(View):
             type.image_banners = image_banners
             type.title_banners = title_banners
 
+        # 获取用户购物车中商品的数量
+        user = request.user
+        cart_count = 0
+        if user.is_authenticated:
+            conn = get_redis_connection('default')
+            cart_key = 'cart_%d' % user.id
+            cart_count = conn.hlen(cart_key)
+
         # 组织模板上下文
         context = {
             'types': types,
             'goods_banners': goods_banners,
+            'cart_count' : cart_count
         }
 
         return render(request, 'index.html', context)
+
+
+# /goods/sku_id
+class DetailView(View):
+    '''详情页'''
+    

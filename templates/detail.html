@@ -44,6 +44,7 @@
 			</div>
 			<div class="total">总价<em>16.80元</em></div>
 			<div class="operate_btn">
+				{% csrf_token %}
 				<a href="javascript:;" class="buy_btn">立即购买</a>
 				<a href="javascript:;" sku_id="{{ sku.id }}" class="add_cart" id="add_cart">加入购物车</a>
 			</div>
@@ -164,5 +165,45 @@
 		// 更新商品的总价
 		update_goods_amount()
 	})
+
+	// 获取add_cart div 元素左上角的坐标
+	var $add_x = $('#add_cart').offset().top;
+	var $add_y = $('#add_cart').offset().left;
+
+	// 获取show_count div 元素左上角坐标
+	var $to_x = $('#show_count').offset().top;
+	var $to_y = $('#show_count').offset().left;
+
+	// 添加到购物车
+	$('#add_cart').click(function(){
+		// 获取商品id和数量
+		sku_id = $(this).attr('sku_id')
+		count = $('.num_show').val()
+		csrf = $('input[name="csrfmiddlewaretoken"]').val()
+
+		// 组织参数
+		parems = {'sku_id':sku_id, 'count':count, 'csrfmiddlewaretoken':csrf }
+
+		// 发起ajax post 请求,访问/cart/add，传递sku_id, count
+		$.post('/cart/add', parems, function(data){
+			if(data.res == 5){
+				// 添加成功
+				$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+				$(".add_jump").stop().animate({
+					'left': $to_y+7,
+					'top': $to_x+7},
+					"fast", function(){
+						$(".add_jump").fadeOut('fast',function(){
+							// 重新设置用户购物车中商品的条目数
+							$('#show_count').html(data.total_count);
+						});
+				});
+			}
+			else{
+				// 添加失败
+				alert(data.errmsg)
+			}
+		});
+	});
 	</script>
 {% endblock bottomfiles %}

@@ -50,7 +50,7 @@ class RegisterView(View):
             return render(request, 'register.html', {'errmsg': '用户名已存在'})
 
         # 往数据库添加数据
-        user = User.objects.create_user(username, password, email)
+        user = User.objects.create_user(username=username, password=password, email=email)
         user.is_active = 0  # 初始状态未激活，需要到邮箱验证激活
         user.save()
 
@@ -63,7 +63,7 @@ class RegisterView(View):
         # 发送邮件
         send_register_active_emali.delay(email, username, token)  # 发出任务
         # 返回应答
-        #return redirect(reverse('goods:index'))
+        return HttpResponse('注册成功，请到邮箱中激活您的账号')
 
 
 # /user/active/加密token

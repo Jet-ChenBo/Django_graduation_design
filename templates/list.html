@@ -66,3 +66,23 @@
 	</div>
 {% endblock body %}
 
+{% block bottomfiles %}
+	<script src="/static/js/jquery-1.12.4.min.js"></script>
+	<script>
+		$('.add_goods').click(function(){
+			sku_id = $(this).attr('sku_id')
+			csrf = $('input[name="csrfmiddlewaretoken"]').val()
+			params = {'sku_id':sku_id, 'count':1, 'csrfmiddlewaretoken':csrf}
+			$.post('/cart/add', params, function(data){
+				if(data.res == 5){
+					alert(data.msg)
+					location.reload()
+				}
+				else{
+					alert(data.errmsg)
+				}
+			})
+		})
+	</script>
+{% endblock bottomfiles %}
+

@@ -3,7 +3,7 @@
 
 {% block goods_type %}
 	{% for type in types %}
-	<li><img src="{{ type.image.url }}" alt="商品种类图片"><a href="#">{{ type.name }}</a></li>
+	<li><img src="{{ type.image.url }}" alt="商品种类图片"><a href="{% url 'goods:list' type.id 1 %}">{{ type.name }}</a></li>
 	{% endfor %}
 {% endblock goods_type%}
 

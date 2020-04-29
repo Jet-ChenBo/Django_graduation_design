@@ -1,0 +1,101 @@
+{% extends 'base_user.html' %}
+{% block title %}用户信息{% endblock title %}
+
+{% block right_content %}
+	<div class="right_content clearfix">
+		<div class="info_con clearfix">
+			<div class="mc fl">
+				<a class="avatar" href="">
+					<img alt="username" class="avater" title="" src="/static/images/avatar.jpg">
+				</a>
+				<div class="user">
+					<em class="user_name" target="_blank">{{ user.username }}</em>
+				</div>
+				<div class="mt"></div>
+			</div>
+
+			<div class="wallet fl">
+				<div class="wallet_title">
+					<h3>我的钱包</h3>
+				</div>
+				<div class="wallet_info">
+					<ul>
+						<li>
+							<div class="num">0</div>
+							<div class="name">优惠卷</div>
+						</li>
+						<li>
+							<div class="num">{{ user.points }}</div>
+							<div class="name">积分</div>
+							<div class="name info">10积分可抵扣1元</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="order_show fl">
+			<div class="order_title">
+				<h3>我的订单</h3>
+			</div>
+			<div class="order_info">
+				<div class="nav">
+					<a href="user_center_wait_pay_order.html">
+						<div class="nav_icon wait_pay"><sup class="badge number" title="1">1</sup></div>
+						<span class="name">待付款</span>
+					</a>
+					<a href="user_center_wait_review_order.html">
+						<div class="nav_icon wait_review"></div>
+						<span class="name">待评价</span>
+					</a>
+					<a href="user_center_all_order.html">
+						<div class="nav_icon all_order"></div>
+						<span class="name">全部订单</span>
+					</a>
+				</div>
+				<div class="order_list"></div>
+			</div>
+		</div>
+		<div class="recent-view fl">
+			<div class="common_title2">
+				<h3>最近浏览</h3>
+			</div>
+			<div class="has_view_list">
+				{% csrf_token %}
+				<ul class="goods_type_list clearfix">
+					{% for goods in goods_li %}
+					<li>
+						<a href="{% url 'goods:detail' goods.id %}"><img src="{{ goods.image.url }}"></a>
+						<h4><a href="{% url 'goods:detail' goods.id %}">{{ goods.name }}</a></h4>
+						<div class="operate">
+							<span class="prize">{{ goods.price }}</span>
+							<span class="unit">{{ goods.price }}/{{ goods.unite }}</span>
+							<a href="#" sku_id="{{ goods.id }}" class="add_goods" title="加入购物车"></a>
+						</div>
+					</li>
+					{% empty %}
+						无历史浏览记录
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock right_content %}
+
+{% block bottomfiles %}
+	<script src="/static/js/jquery-1.12.4.min.js"></script>
+	<script>
+		$('.add_goods').click(function(){
+			sku_id = $(this).attr('sku_id')
+			csrf = $('input[name="csrfmiddlewaretoken"]').val()
+			params = {'sku_id':sku_id, 'count':1, 'csrfmiddlewaretoken':csrf}
+			$.post('/cart/add', params, function(data){
+				if(data.res == 5){
+					alert(data.msg)
+				}
+				else{
+					alert(data.errmsg)
+				}
+			})
+		})
+	</script>
+{% endblock bottomfiles %}

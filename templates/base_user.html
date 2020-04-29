@@ -1,0 +1,99 @@
+{# 用户相关页面 #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    {# 网页标题 #}
+	<title>{% block title %}{% endblock title %}</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	{# 引入的js文件 #}
+    {% block jsfiles %}{% endblock jsfiles%}
+</head>
+<body class="user">
+{# 网页顶部信息 #}
+{% block header_con %}
+    <div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎使用生鲜配送</div>
+			<div class="fr">
+                {% if user.is_authenticated %}
+				<div class="login_info fl">
+					欢迎您：<em>{{ user.username }}</em>
+                    <a href="{% url 'user:logout' %}">&nbsp;&nbsp;退出</a>
+				</div>
+                {% else %}
+				<div class="login_btn fl">
+					<a href="{% url 'user:login' %}">登录</a>
+					<span>|</span>
+					<a href="{% url 'user:register' %}">注册</a>
+				</div>
+                {% endif %}
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="#">用户中心</a>
+					<span>|</span>
+					<a href="#">我的购物车</a>
+					<span>|</span>
+					<a href="#">我的订单</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock header_con %}
+
+{# 网页搜索框 #}
+{% block search_bar %}
+    <div class="search_bar clearfix">
+		<div class="logo_box">
+			<a href="{% url 'goods:index' %}" target="_blank" class="logo"></a>
+			<a href="{% url 'goods:index' %}" target="_self" class="sub_page_name">用户中心</a>
+			<a href="{% url 'goods:index' %}" target="_blank" class="return_home">返回首页</a>
+		</div>
+        <div class="search_con fl">
+            <form method="get" action="/search">
+				<input type="text" class="input_text fl" name="q" placeholder="搜索商品">
+				<input type="submit" class="input_btn fr" name="" value="搜索">
+			</form>
+		</div>
+	</div>
+{% endblock search_bar %}
+
+{# 网页主体内容#}
+{% block body %}
+    <div class="main_con clearfix">
+        <div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="{% url 'user:user' %}" {% if page == 'info' %}class="active"{% endif %}>· 个人信息</a></li>
+				<li><a href="#" {% if page == 'order' %}class="active"{% endif %}>· 全部订单</a></li>
+				<li><a href="#}" {% if page == 'site' %}class="active"{% endif %}>· 收货地址</a></li>
+			</ul>
+		</div>
+        {# 用户中心右侧内容块 #}
+        {% block right_content %}{% endblock right_content %}
+    </div>>
+{% endblock body %}
+    <div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888 京ICP备*******8号</p>
+	</div>
+
+{# 网页底部html元素块 #}
+{% block bottom %}
+{% endblock bottom %}
+
+{# 网页底部引入文件块 #}
+{% block bottomfiles %}
+{% endblock bottomfiles %}
+</body>
+</html>

@@ -50,7 +50,7 @@ class RegisterView(View):
             return render(request, 'register.html', {'errmsg': '用户名已存在'})
 
         # 往数据库添加数据
-        user = User.objects.create_user(username=username, password=password, email=email)
+        user = User.objects.create_user(username, email, password)
         user.is_active = 0  # 初始状态未激活，需要到邮箱验证激活
         user.save()
 

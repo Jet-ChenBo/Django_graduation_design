@@ -18,6 +18,7 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^search', include('haystack.urls')),  # 全文检索框架
     url(r'', include(('goods.urls', 'goods'), namespace='goods')),  # 商品模块
     url(r'^user/', include(('user.urls', 'user'), namespace='user')), # 用户模块
     url(r'^cart/', include(('cart.urls', 'cart'), namespace='cart')),  # 购物车模块

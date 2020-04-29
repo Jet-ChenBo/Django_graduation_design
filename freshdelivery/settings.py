@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'goods',  # 商品模块
     'order',  # 订单模块
     'cart',  # 购物车模块
+    'haystack',  # 全文搜索框架
 ]
 
 MIDDLEWARE = [
@@ -163,3 +164,17 @@ SESSION_CACHE_ALIAS = "default"
 
 # 配置未登录时跳转的地址
 LOGIN_URL='/user/login'
+
+# haystack的配置
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        # 使用whoosh引擎
+		'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+		# 索引文件存放路径，生成索引时会自动创建此位置
+		'PATH': os.path.join(BASE_DIR, 'haystack_index'),
+    }
+}
+# 当添加、修改、删除数据时，自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+# 全文搜索结果每页商品的个数
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 4

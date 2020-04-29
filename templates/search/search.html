@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}商品搜索结果{% endblock title %}
+
+{% block type_list %}
+    <div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>{{ query }}</h1>
+                <span></span>>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="{% url 'goods:index' %}">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+{% endblock type_list %}
+
+{% block body %}
+    <div class="breadcrumb">
+		<a>搜索结果如下</a>
+	</div>
+
+    <div class="main_wrap clearfix" style="margin-right:0px">
+		<ul class="goods_type_list clearfix">
+			{% csrf_token %}
+				{% for item in page %}
+				<li>
+					<a href="{% url 'goods:detail' item.object.id %}"><img src="{{ item.object.image.url }}"></a>
+					<h4><a href="{% url 'goods:detail' item.object.id %}">{{ item.object.name }}</a></h4>
+                    <h4 class="item_summary"><span>总销量：</span><strong>{{ item.object.sales }}</strong></h4>
+					<div class="operate">
+						<span class="prize">￥{{ item.object.price }}</span>
+						<span class="unit">{{ item.object.price }}/{{ item.object.unite }}</span>
+						<a href="#" sku_id="{{ item.object.id }}" class="add_goods" title="加入购物车"></a>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+
+		<div class="pagenation" style="margin-right:230px">
+				{% if page.has_previous %}
+				<a href="/search?q={{ query }}&page={{ page.previous_page_number }}">上一页</a>
+				{% endif %}
+
+				{% for pindex in paginator.page_range %}
+					{% if pindex == page.number %}
+					<a href="/search?q={{ query}}&page={{ pindex }}" class="active">{{ pindex }}</a>
+					{% else %}
+					<a href="/search?q={{ query}}&page={{ pindex }}">{{ pindex }}</a>
+					{% endif %}
+				{% endfor %}
+
+				{% if page.has_next %}
+				<a href="/search?q={{ query }}&page={{ page.next_page_number }}">下一页></a>
+				{% endif %}
+			</div>
+	</div>
+{% endblock body %}
+
+{% block bottomfiles %}
+	<script src="/static/js/jquery-1.12.4.min.js"></script>
+	<script>
+        window.onload=function (){
+            // 计算购物车中商品的体条目数
+            $.get('/cart/add',function(data){
+                if(data.res == 1){
+					$('#show_count').html(data.total_count);
+				}
+				else{
+					alert(data.errmsg)
+				}
+            })
+        }
+
+		$('.add_goods').click(function(){
+			sku_id = $(this).attr('sku_id')
+			csrf = $('input[name="csrfmiddlewaretoken"]').val()
+			params = {'sku_id':sku_id, 'count':1, 'csrfmiddlewaretoken':csrf}
+			$.post('/cart/add', params, function(data){
+				if(data.res == 5){
+					alert(data.msg)
+					location.reload()
+				}
+				else{
+					alert(data.errmsg)
+				}
+			})
+		})
+	</script>
+{% endblock bottomfiles %}

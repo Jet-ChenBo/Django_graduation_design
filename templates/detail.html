@@ -170,12 +170,13 @@
 	var $add_x = $('#add_cart').offset().top;
 	var $add_y = $('#add_cart').offset().left;
 
-	// 获取show_count div 元素左上角坐标
-	var $to_x = $('#show_count').offset().top;
-	var $to_y = $('#show_count').offset().left;
-
 	// 添加到购物车
 	$('#add_cart').click(function(){
+
+		// 获取show_count div 元素左上角坐标
+		var $to_x = $('#show_count').offset().top;
+		var $to_y = $('#show_count').offset().left;
+
 		// 获取商品id和数量
 		sku_id = $(this).attr('sku_id')
 		count = $('.num_show').val()

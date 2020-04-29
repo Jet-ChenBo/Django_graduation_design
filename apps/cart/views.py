@@ -8,9 +8,19 @@ from django_redis import get_redis_connection
 # /cart/add
 class CartAddView(View):
     '''
-    添加商品到购物车
-    前端通过 ajax post 请求
+    1：获取购物车的数量，用户搜索页的显示
+    2：添加商品到购物车，前端通过 ajax post 请求
     '''
+    def get(self, request):
+        user = request.user
+        if not user.is_authenticated:
+            return JsonResponse({'res':0., 'errmsg':'请先登录'})
+        conn = get_redis_connection('default')
+        cart_key = 'cart_%d' % user.id
+        total_count = conn.hlen(cart_key)
+        # 返回应答
+        return JsonResponse({'res':1, 'total_count': total_count})
+
     def post(self, request):
         user = request.user
         if not user.is_authenticated:

@@ -13,6 +13,7 @@ from user.models import User, Address
 from goods.models import GoodsSKU
 from order.models import OrderGoods, OrderInfo
 from django_redis import get_redis_connection
+from util.mixin import LoginRequiredMixmin
 
 # Create your views here.
 
@@ -143,7 +144,7 @@ class LogoutView(View):
 
 
 # /user
-class UserInfoView(View):
+class UserInfoView(LoginRequiredMixmin, View):
     '''用户中心-信息页'''
     def get(self, request):
         '''显示'''
@@ -169,3 +170,13 @@ class UserInfoView(View):
                    'goods_li':goods_li
                     }
         return render(request, 'user_center_info.html', context)
+
+
+# /user/site
+class UserSiteView(LoginRequiredMixmin, View):
+    '''用户中心-地址页'''
+    def get(self, request):
+        # 获取用户默认收获地址
+        user = request.user
+        address = Address.objects.get_default_address(user)
+        return render(request, 'user_center_site.html', {'page':'site','address':address})

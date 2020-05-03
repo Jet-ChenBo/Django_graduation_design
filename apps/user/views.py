@@ -178,8 +178,41 @@ class UserSiteView(LoginRequiredMixmin, View):
     def get(self, request):
         # 获取用户默认收获地址
         user = request.user
+        addresses = Address.objects.filter(user=user)
+        return render(request, 'user_center_site.html', {'page':'site','addresses':addresses})
+
+    def post(self, request):
+        '''地址的添加'''
+        # 接受数据
+        receiver = request.POST['receiver']
+        prov = request.POST['prov']
+        city = request.POST['city']
+        county = request.POST['county']
+        addr = prov + ' ' + city + ' ' + county + ' ' + request.POST['addr']
+        zip_code = request.POST['zip_code']
+        phone = request.POST['phone']
+
+        # 数据校验
+        if not all([receiver, addr, phone]):
+            return render(request, 'user_center_site.html', {'errmsg': '数据不完整'})
+        if not re.match(r'^1[3|4|5|7|8][0-9]{9}$', phone):
+            return render(request, 'user_center_site.html', {'errmsg': '手机号码不存在'})
+
+        # 业务处理：添加地址
+        # 如果用户没有默认地址，就设置为默认地址
+        user = request.user
         address = Address.objects.get_default_address(user)
-        return render(request, 'user_center_site.html', {'page':'site','address':address})
+
+        if address:
+            is_default = False
+        else:
+            is_default = True
+        # 添加地址
+        Address.objects.create(user=user, receiver=receiver, address=addr,
+                               zip_code=zip_code, phone=phone, is_default=is_default)
+
+        # 返回应答，刷新页面
+        return redirect(reverse('user:site'))
 
 
 # /user/cities+pid

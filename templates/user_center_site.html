@@ -9,11 +9,11 @@
 		<div class="site_con">
 			<dl>
 				<dt>当前地址：</dt>
-				{% if address %}
-				<dd>{{ address.addr}} ({{ address.receiver }} 收) {{ address.phone }}</dd>
-				{% else %}
+				{% for address in addresses%}
+				<dd>{{ address.address}} ({{ address.receiver }} 收) {{ address.phone }}</dd>
+				{% empty %}
 				<dd>未添加地址</dd>
-				{% endif %}
+				{% endfor %}
 			</dl>
 		</div>
 		<div class="common_title3">
@@ -29,16 +29,13 @@
 				<div class="form_group select_area">
 					<label>所在地区：</label>
 					<select type="text" id="prov" name="prov">
-						<option value="0" selected>---请选择省---</option>
-
+						<option selected>---请选择省---</option>
 					</select>
 					<select type="text" id="city" name="city">
-						<option value="0" selected>---请选择市---</option>
-
+						<option  selected>---请选择市---</option>
 					</select>
 					<select type="text" id="county" name="county">
-						<option value="0" selected>---请选择县---</option>
-
+						<option  selected>---请选择县---</option>
 					</select>
 				</div>
 				<div class="form_group form_group2">
@@ -53,7 +50,6 @@
 					<label>手机：</label>
 					<input type="text" name="phone">
 				</div>
-
 				<input type="submit" name="" value="提交" class="info_submit">
 			</form>
 		</div>
@@ -72,14 +68,14 @@
                 $.each(res, function(index, item){  // 第几个元素,元素值
                     id = item[0]
                     atitle = item[1]
-                    prov.append('<option value="'+id+'">'+atitle+'</option>')
+                    prov.append('<option pid="'+id+'" value="'+atitle+'">'+atitle+'</option>')
                 })
             })
 
             // 绑定prov下拉框的change事件，获取省对应的市信息
             $('#prov').change(function(){
                 // 发起ajax请求 /cities，获取市级信息,传入省的id
-                prov_id = $(this).val()
+                prov_id = $('#prov option:selected').attr('pid')
                 $.get('/user/cities'+prov_id, function(data){
                     city = $('#city')
                     county = $('#county')
@@ -90,7 +86,7 @@
                     $.each(res, function(index, item){
                         id = item[0]
                         atitle = item[1]
-                        city.append('<option value="'+id+'">'+atitle+'</option>')
+                        city.append('<option pid="'+id+'" value="'+atitle+'">'+atitle+'</option>')
                     })
                 })
             })
@@ -98,7 +94,7 @@
             // 绑定city下拉框的change事件，获取市对应的县信息
             $('#city').change(function(){
                 // 发起ajax请求 /cities，获取县级信息,传入市的id
-                city_id = $(this).val()
+                city_id = $('#city option:selected').attr('pid')
                 $.get('/user/cities'+city_id, function(data){
                     county = $('#county')
                     res = data.data
@@ -107,7 +103,7 @@
                     $.each(res, function(index, item){
                         id = item[0]
                         atitle = item[1]
-                        county.append('<option value="'+id+'">'+atitle+'</option>')
+                        county.append('<option pid="'+id+'" value="'+atitle+'">'+atitle+'</option>')
                     })
                 })
             })

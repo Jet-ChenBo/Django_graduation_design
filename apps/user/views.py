@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import View
 import re
 from user.models import User
@@ -9,7 +9,7 @@ from django.conf import settings
 from celery_tasks.tasks import send_register_active_emali
 from django.urls import reverse
 from django.contrib.auth import authenticate, logout, login
-from user.models import User, Address
+from user.models import User, Address, AreaInfo
 from goods.models import GoodsSKU
 from order.models import OrderGoods, OrderInfo
 from django_redis import get_redis_connection
@@ -180,3 +180,19 @@ class UserSiteView(LoginRequiredMixmin, View):
         user = request.user
         address = Address.objects.get_default_address(user)
         return render(request, 'user_center_site.html', {'page':'site','address':address})
+
+
+# /user/cities+pid
+class CitiesView(View):
+    '''获取省级信息以及下级地区'''
+    def get(self, request, pid):
+        if pid == '':
+            areas = AreaInfo.objects.filter(aParent__isnull=True)
+        else:
+            areas = AreaInfo.objects.filter(aParent__id=pid)
+
+        area_list = []
+        for area in areas:
+            area_list.append((area.id, area.atitle))
+
+        return JsonResponse({'data':area_list})

@@ -13,6 +13,15 @@ class User(AbstractUser, BaseModel):
         verbose_name_plural = verbose_name
 
 
+class AreaInfo(models.Model):
+    '''省市县模型类'''
+    atitle = models.CharField(max_length=20, verbose_name='地点名')
+    aParent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name='父级地点')
+
+    class Meta:
+        db_table = 'areas'
+
+
 class AddressManager(models.Manager):
     '''用户地址模型管理器'''
 

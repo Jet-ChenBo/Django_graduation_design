@@ -14,6 +14,7 @@ from goods.models import GoodsSKU
 from order.models import OrderGoods, OrderInfo
 from django_redis import get_redis_connection
 from util.mixin import LoginRequiredMixmin
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -156,6 +157,11 @@ class UserInfoView(LoginRequiredMixmin, View):
         con = get_redis_connection('default')  # default对应缓存配置中的键名
         history_key = "history_%d" % user.id
 
+        # 获取订单信息
+        waitpay_orders = len(OrderInfo.objects.filter(user=user, order_status=1).order_by('-create_time'))
+        waitreview_orders = len(OrderInfo.objects.filter(user=user, order_status=4).order_by('-create_time'))
+        all_orders = len(OrderInfo.objects.filter(user=user).order_by('-create_time'))
+
         # 获取历史浏览记录前五个商品的id
         sku_ids = con.lrange(history_key, 0, 4)
 
@@ -167,7 +173,10 @@ class UserInfoView(LoginRequiredMixmin, View):
             goods_li.append(goods)
 
         context = {'page':'info',
-                   'goods_li':goods_li
+                   'goods_li':goods_li,
+                   'waitpay_orders':waitpay_orders,
+                   'waitreview_orders':waitreview_orders,
+                   'all_orders':all_orders
                     }
         return render(request, 'user_center_info.html', context)
 
@@ -229,3 +238,70 @@ class CitiesView(View):
             area_list.append((area.id, area.atitle))
 
         return JsonResponse({'data':area_list})
+
+
+# /user/order/order_status/page
+# order_status表示订单状态，值为：all、waitpay、waitreview
+class UserOrderView(LoginRequiredMixmin, View):
+    '''用户中心-订单页'''
+    def get(self, request, order_status, page):
+        '''显示'''
+        # 获取用户订单信息
+        user = request.user
+        if order_status == 'waitpay':
+            orders = OrderInfo.objects.filter(user=user, order_status=1).order_by('-create_time')
+        elif order_status == 'waitreview':
+            orders = OrderInfo.objects.filter(user=user, order_status=4).order_by('-create_time')
+        else:
+            orders = OrderInfo.objects.filter(user=user).order_by('-create_time')
+
+        # 遍历获取订单商品的信息
+        for order in orders:
+            order_skus = OrderGoods.objects.filter(order=order.order_id)
+            # 计算商品小计
+            for order_sku in order_skus:
+                amount = order_sku.count * order_sku.price
+                # 动态增加属性
+                order_sku.amount = amount
+
+            order.status_name = OrderInfo.ORDER_STATUS[order.order_status]
+
+            # 动态增加属性，保存订单商品的信息
+            order.order_skus = order_skus
+
+        # 分页
+        paginator = Paginator(orders, 1)
+
+        # 获取第page页的内容
+        try:
+            page = int(page)
+        except Exception as e:
+            page = 1
+        if page > paginator.num_pages:
+            page = 1
+
+        # 获取第page页的实例对象
+        order_page = paginator.page(page)
+
+        # todo: 进行页码控制，页面上最多显示5个页码
+        # 1.总页数小于等于五页，页面上显示所有页码
+        # 2.如果当前是前三页，显示1-5页
+        # 3.如果当前是倒数后三页，显示倒数1-5页
+        # 4.其他情况，显示当前页和前后2页
+        num_pages = paginator.num_pages
+        if num_pages <= 5:
+            pages = range(1, num_pages + 1)
+        elif page <= 3:
+            pages = range(1, 6)
+        elif num_pages - page <= 2:
+            pages = range(num_pages - 4, num_pages + 1)
+        else:
+            pages = range(num_pages - 2, num_pages + 3)
+        # 组织上下文
+        context = {
+            'order_page': order_page,
+            'pages': pages,
+            'page': 'order',
+            'order_status': order_status
+        }
+        return render(request, 'user_center_order.html', context)

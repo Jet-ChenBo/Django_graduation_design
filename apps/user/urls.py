@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^logout$', views.LogoutView.as_view(), name='logout'),  # 退出登录
     url(r'^$', views.UserInfoView.as_view(), name='user'),  # 用户中心-信息页
     url(r'^site$', views.UserSiteView.as_view(), name='site'),  # 用户中心-地址页
+    url(r'^order/(?P<order_status>.*)/(?P<page>\d+)$', views.UserOrderView.as_view(), name='order'),  # 用户中心-订单页
     url(r'^cities(?P<pid>\d*)$', views.CitiesView.as_view(), name='cities'),  # 获取省市区关联信息
 ]

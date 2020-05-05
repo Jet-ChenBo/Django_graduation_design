@@ -923,13 +923,20 @@ html,body{height:100%}
 	display: flex;
 	justify-content: space-between;
 }
-.order_list_show .nav ul li a{
+.order_list_show .nav ul li{
+	cursor: pointer;
 	vertical-align: middle;
     color: #333;
 }
-.order_list_show .nav ul li a.active{
+.order_list_show .nav ul li.active{
 	border-bottom: 2px solid #da260e;
 	color: #da260e;
+}
+#order_tab_pay{
+	display: none;
+}
+#order_tab_review{
+	display: none;
 }
 .select_area select{
 	appearance:none;

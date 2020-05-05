@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{# 网页搜索框 #}
+{% block search_bar %}
+    <div class="search_bar clearfix">
+		<div class="logo_box">
+			<a href="{% url 'goods:index' %}" target="_blank" class="logo"></a>
+			<a href="{% url 'goods:index' %}" target="_self" class="sub_page_name">{% block name %}{% endblock name %}</a>
+			<a href="{% url 'goods:index' %}" target="_self" class="return_home">返回首页</a>
+		</div>
+		<div class="search_con fr">
+            <form method="get" action="/search">
+				<input type="text" class="input_text fl" name="q" placeholder="搜索商品">
+				<input type="submit" class="input_btn fr" name="" value="搜索">
+			</form>
+		</div>
+	</div>
+{% endblock search_bar %}
+
+{% block type_list %}
+{% endblock type_list %}

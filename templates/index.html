@@ -27,6 +27,7 @@
 		</div>
 	</div>
 
+	<div class="lists">
 	{% for type in types %}
 	<div class="list_model">
 		<div class="list_title clearfix">
@@ -47,11 +48,12 @@
 					<a href="{% url 'goods:detail' banner.sku.id %}"><img src="{{ banner.sku.image.url }}"></a>
 					<div class="name"><a href="#">{{ banner.sku.name }}</a></div>
 					<div class="introduce"><span>{{ banner.sku.desc }}</span></div>
-					<div class="sale">销量：{{ banner.sku.sales }}</div>
+					<div class="sale"><span style="color:red;margin-right:20px;">价格：￥{{ banner.sku.price }}/{{ banner.sku.unite }}</span>销量：{{ banner.sku.sales }}</div>
 				</li>
 				{% endfor %}
 			</ul>
 		</div>
 	</div>
 	{% endfor %}
+	</div>
 {% endblock body%}

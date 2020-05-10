@@ -45,7 +45,7 @@
 				{% endfor %}
 			</div>
 			<div class="pagenation">
-				{% if order_page.has_previous_page %}
+				{% if order_page.has_previous %}
 				<a href="{% url 'user:order' order_status order_page.previous_page_number %}">上一页</a>
 				{% endif %}
 				{% for pindex in pages %}
@@ -55,7 +55,7 @@
 					<a href="{% url 'user:order' order_status pindex %}">{{ pindex }}</a>
 					{% endif %}
 				{% endfor %}
-				{% if order_page.has_next_page %}
+				{% if order_page.has_next %}
 				<a href="{% url 'user:order' order_status order_page.next_page_number %}">下一页></a>
 				{% endif %}
 			</div>

@@ -45,6 +45,7 @@
 {# 网页搜索框 #}
 {% block search_bar %}
     <div class="search_bar clearfix">
+		<div style="padding-top:15px;float:left;"><a href="{% url 'goods:index' %}" target="_self" class="logo"></a></div>
 		<div class="search_con fl">
             <form method="get" action="/search">
 				<input type="text" class="input_text fl" name="q" placeholder="搜索商品">
@@ -74,9 +75,11 @@
 			<ul class="navlist fl">
 				<li><a href="{% url 'goods:index' %}">首页</a></li>
 				<li class="interval">|</li>
-				<li><a href="">手机生鲜</a></li>
+				<li><a href="">手机app</a></li>
 				<li class="interval">|</li>
-				<li><a href="">抽奖</a></li>
+				<li><a href="">促销活动</a></li>
+				<li class="interval">|</li>
+				<li><a href="">积分兑换</a></li>
 			</ul>
 		</div>
 	</div>

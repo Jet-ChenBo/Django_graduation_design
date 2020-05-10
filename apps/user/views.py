@@ -271,7 +271,6 @@ class UserOrderView(LoginRequiredMixmin, View):
 
         # 分页
         paginator = Paginator(orders, 1)
-
         # 获取第page页的内容
         try:
             page = int(page)
@@ -282,7 +281,6 @@ class UserOrderView(LoginRequiredMixmin, View):
 
         # 获取第page页的实例对象
         order_page = paginator.page(page)
-
         # todo: 进行页码控制，页面上最多显示5个页码
         # 1.总页数小于等于五页，页面上显示所有页码
         # 2.如果当前是前三页，显示1-5页

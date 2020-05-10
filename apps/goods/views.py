@@ -122,7 +122,7 @@ class ListView(View):
             skus = GoodsSKU.objects.filter(type=type).order_by('-id')
 
         # todo:分页
-        paginator = Paginator(skus, 2)  # 每页四个商品
+        paginator = Paginator(skus, 4)  # 每页四个商品
 
         # 获取第page页的实例对象
         try:

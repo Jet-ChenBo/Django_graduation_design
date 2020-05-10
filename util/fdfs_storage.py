@@ -12,7 +12,6 @@ class FDFSStorage(Storage):
         # name是文件名字，content是包含文件内容的File对象
 
         client = Fdfs_client('/etc/fdfs/client.conf')
-       # client = Fdfs_client('./utils/client.conf')    两种都可以
 
         # 通过文件内容上传文件
         res = client.upload_by_buffer(content.read())

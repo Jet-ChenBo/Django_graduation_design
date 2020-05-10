@@ -36,7 +36,7 @@ html,body{height:100%}
 /* logo、搜索框、购物车样式 */
 .logo_box{position: relative;float: left;width: 272px;height: 80px;overflow: hidden;margin-top: 10px;}
 .search_bar{width:1200px;height:115px;margin:0 auto;background-color: #da260e;}
-.logo{float: left;margin-right: 10px;width: 158px;height: 80px;background: url(//misc.360buyimg.com/user/myjd/lib/1.0.0/widget/global/i/logo_2017.png) no-repeat;}
+.logo{float: left;margin-right: 10px;width: 158px;height: 80px;background: url(/static/images/logo.png) no-repeat center center; background-size:contain}
 .return_home{float: left;margin: 5px 0 0 10px;color: #ffb2b2;border: 1px solid #ffb2b2;height: 18px;line-height: 18px;padding: 0 10px;border-radius: 10px;}
 
 .navitems{height: 36px;width: 342px;line-height: 36px;padding: 22px 0;margin: 12px 0 0 30px;font-size: 14px;}
@@ -136,7 +136,7 @@ html,body{height:100%}
 /* 商品列表样式 */
 
 .lists{width:1200px;margin: 0 auto;display: flex; flex-wrap: wrap;}
-.list_model{width:592px;height:680px;margin:15px 0 0;background-color: #fff;float: left; padding: 10px 20px;}
+.list_model{width:592px;height:690px;margin:15px 0 0;background-color: #fff;float: left; padding: 10px 20px;}
 .list_title{height:40px;}
 .list_title h3{height:40px;line-height:48px;font-size:20px;color:#37ab40;font-weight:bold;}
 .list_title .subtitle{height:20px;line-height:20px;margin-top:15px;}
@@ -150,18 +150,18 @@ html,body{height:100%}
 .goods_banner img{width:200px;height:300px;}
 
 .goods_list{widows: 554px;display: flex; justify-content: space-between;flex-wrap: wrap;}
-.goods_list li{height:299px;width:249px;}
+.goods_list li{height:330px;width:249px;}
 /* .goods_list li:hover{width:248px;height:297px;border:1px solid gold;} */
 .goods_list li:hover img{opacity:0.5}
 
-.goods_list li .introduce{text-align: center;}
+.goods_list li .introduce{text-align: center;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;sale}
 .goods_list li .name{width:200px;height:40px;margin:0 auto;text-align:center;font-size: 20px;font-weight: 700px;}
 .goods_list li h4{width:200px;height:40px;margin:20px auto 0;text-align:center;}
 .goods_list li .name a{color:#000;font-weight:normal;line-height:24px;}
 .goods_list li .name a:hover{color:#ff8800}
 
 .goods_list li img{display:block;width:210px;height:210px;margin:20px auto 10px;border: 1px solid #999999;}
-.goods_list li .sale{text-align:center;color:#35B1FF;margin-top:5px;}
+.goods_list li .sale{text-align:center;color:green;margin-top:5px;}
 
 /* 页面底部样式 */
 .footer{
@@ -302,9 +302,8 @@ html,body{height:100%}
 .total{height:35px;line-height:35px;margin-top:25px;color: #999;padding:0 12px}
 .total em{font-style:normal;color:#ff3e3e;font-size:18px;margin-left: 20px;}
 
-.operate_btn{height:40px;margin-top:35px;font-size:0;position:relative;}
-.operate_btn .buy_btn,.operate_btn .add_cart{display:inline-block;width:178px;height:38px;border:1px solid #FF0036;font-size:14px;color:#FF0036;line-height:38px;text-align:center;background-color:#ffeded;}
-.operate_btn .add_cart{background-color:#FF0036;color:#fff;margin-left:10px;position:relative;z-index:10;}
+.operate_btn{height:40px;margin-top:35px;font-size:0;position:relative;text-align:center}
+.operate_btn .add_cart{display:inline-block;margin-left:10px;position:relative;z-index:10;width:178px;height:38px;border:1px solid #FF0036;font-size:14px;color:#fff;line-height:38px;text-align:center;background-color:#FF0036;}
 
 .add_jump{width:20px;height:20px;background-color:#FF0036;position:absolute;left:268px;top:10px;border-radius:50%;z-index:9;display:none;}
 
@@ -657,11 +656,11 @@ html,body{height:100%}
 .info_con .mc .user{
 	display: inline-block;
     margin-bottom: 10px;
-    height: 20px;
-    overflow: hidden;
+    height: 103px;
+    margin-top:54px;
 }
 .info_con .mc .user .user_name{
-    font: 700 18px/20px Arial;
+    font-size: 53px;
     color: #fff;
 }
 .info_con .mc .score{

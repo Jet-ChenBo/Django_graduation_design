@@ -7,7 +7,7 @@ $(function(){
 	var $next = $('.next');
 	var ismove = false;
 	var timer = null;
-	$slides.not(':first').css({left:760});
+	$slides.not(':first').css({left:1200});
 	$slides.each(function(index, el) {
 		var $li = $('<li>');
 
@@ -83,9 +83,9 @@ $(function(){
 		{
 			nowli=len-1;
 			prevli = 0
-			$slides.eq(nowli).css({left:-760});
+			$slides.eq(nowli).css({left:-1200});
 			$slides.eq(nowli).animate({left:0},800,'easeOutExpo');
-			$slides.eq(prevli).animate({left:760},800,'easeOutExpo',function(){
+			$slides.eq(prevli).animate({left:1200},800,'easeOutExpo',function(){
 				ismove = false;
 			});
 			prevli=nowli;
@@ -96,9 +96,9 @@ $(function(){
 		{
 			nowli = 0;
 			prevli = len-1;
-			$slides.eq(nowli).css({left:760});
+			$slides.eq(nowli).css({left:1200});
 			$slides.eq(nowli).animate({left:0},800,'easeOutExpo');
-			$slides.eq(prevli).animate({left:-760},800,'easeOutExpo',function(){
+			$slides.eq(prevli).animate({left:-1200},800,'easeOutExpo',function(){
 				ismove = false;
 			});
 			prevli=nowli;
@@ -108,8 +108,8 @@ $(function(){
 
 		if(prevli<nowli)
 		{
-			$slides.eq(nowli).css({left:760});			
-			$slides.eq(prevli).animate({left:-760},800,'easeOutExpo');
+			$slides.eq(nowli).css({left:1200});
+			$slides.eq(prevli).animate({left:-1200},800,'easeOutExpo');
 			$slides.eq(nowli).animate({left:0},800,'easeOutExpo',function(){
 				ismove = false;
 			});
@@ -118,8 +118,8 @@ $(function(){
 		}
 		else
 		{			
-			$slides.eq(nowli).css({left:-760});			
-			$slides.eq(prevli).animate({left:760},800,'easeOutExpo');	
+			$slides.eq(nowli).css({left:-1200});
+			$slides.eq(prevli).animate({left:1200},800,'easeOutExpo');
 			$slides.eq(nowli).animate({left:0},800,'easeOutExpo',function(){
 				ismove = false;
 			});

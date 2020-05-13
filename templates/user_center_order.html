@@ -1,4 +1,5 @@
 {% extends 'base_user.html' %}
+{% load filter %}
 {% block title %}用户订单信息{% endblock title %}
 
 {% block right_content %}
@@ -34,7 +35,7 @@
 									</ul>
 									{% endfor %}
 								</td>
-								<td width="15%" class="count">{{ order.total_price|add:order.transit_price }}(含运费:{{ order.transit_price }})元</td>
+								<td width="15%" class="count">{{ order.total_price|sadd:order.transit_price }}(含运费:{{ order.transit_price }})元</td>
 								<td width="15%">{{ order.status_name }}</td>
 								{% csrf_token %}
 								<td width="15%"><a href="#" order_id="{{ order.order_id }}" status="{{ order.order_status }}" class="oper_btn">去付款</a></td>

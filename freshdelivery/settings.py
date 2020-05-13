@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'order',  # 订单模块
     'cart',  # 购物车模块
     'haystack',  # 全文搜索框架
+    'user.templatetags.filter',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+        'libraries':{
+            'add': 'user.templatetags.filter',
+            }
         },
     },
 ]

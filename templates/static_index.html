@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}首页{% endblock title %}
+{% block jsfiles %}
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/static/js/slide.js"></script>
+{% endblock jsfiles%}
+
+{# 网页顶部信息 #}
+{% block header_con %}
+    <div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎使用生鲜配送</div>
+			<div class="fr">
+				<div class="login_btn fl">
+					<a href="{% url 'user:login' %}">登录</a>
+					<span>|</span>
+					<a href="{% url 'user:register' %}">注册</a>
+				</div>
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="{% url 'user:user' %}">用户中心</a>
+					<span>|</span>
+					<a href="{% url 'cart:show' %}">我的购物车</a>
+					<span>|</span>
+					<a href="{% url 'user:order' 'all' 1 %}">我的订单</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock header_con %}
+
+{% block goods_type %}
+	{% for type in types %}
+	<li><img src="{{ type.image.url }}" alt="商品种类图片"><a href="#model0{{ forloop.counter }}">{{ type.name }}</a></li>
+	{% endfor %}
+{% endblock goods_type %}
+
+{% block body %}
+	<div class="center_con clearfix">
+		<div class="slide">
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+			<ul class="slide_pics">
+				{# 幻灯片#}
+				{% for banner in goods_banners %}
+				<li><a href="{% url 'goods:detail' banner.sku.id %}"><img src="{{ banner.image.url }}" alt="幻灯片"></a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="lists">
+	{% for type in types %}
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model0{{ forloop.counter }}">{{ type.name }}</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{% for banner in type.title_banners %}
+				<a href="{% url 'goods:detail' banner.sku.id %}">{{ banner.sku.name }}</a>
+				{% endfor %}
+			</div>
+			<a href="{% url 'goods:list' type.id 1 %}" class="goods_more fr" id="fruit_more">查看更多 &lt;</a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<ul class="goods_list fl">
+				{% for banner in type.image_banners %}
+				<li>
+					<a href="{% url 'goods:detail' banner.sku.id %}"><img src="{{ banner.sku.image.url }}"></a>
+					<div class="name"><a href="#">{{ banner.sku.name }}</a></div>
+					<div class="introduce"><span>{{ banner.sku.desc }}</span></div>
+					<div class="sale"><span style="color:red;margin-right:20px;">价格：￥{{ banner.sku.price }}/{{ banner.sku.unite }}</span>销量：{{ banner.sku.sales }}</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	{% endfor %}
+	</div>
+{% endblock body%}

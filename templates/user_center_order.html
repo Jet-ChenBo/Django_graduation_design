@@ -26,7 +26,7 @@
 						<tbody>
 							<tr>
 								<td width="55%">
-									{% for order_sku in order.order_skus %}v
+									{% for order_sku in order.order_skus %}
 									<ul class="order_goods_list clearfix">
 										<li class="col01"><img src="{{ order_sku.sku.image.url }}"></li>
 										<li class="col02">{{ order_sku.sku.name }}<em>{{ order_sku.price }}元/{{ order_sku.sku.unite }}</em></li>
@@ -97,8 +97,9 @@
 						$.post('/order/check', params, function(data){
 							if(data.res == 3){
 								alert(data.msg)
+								console.log('支付成功')
 								// 刷新页面
-								location.reload()
+								window.location.reload()
 							}
 							else{
 								alert(data.errmsg)

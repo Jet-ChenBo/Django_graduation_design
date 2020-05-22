@@ -1,7 +1,6 @@
 from django.contrib import admin
 from goods.models import GoodsType, GoodsSKU, Goods, IndexTypeGoodsBanner, IndexGoodsBanner
 from django.core.cache import cache
-from celery_tasks.tasks import generate_static_index_html
 # Register your models here.
 
 
@@ -10,6 +9,7 @@ class BaseModelAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
         # 发出任务，让celery worker生成静态页面
+        from celery_tasks.tasks import generate_static_index_html
         generate_static_index_html.delay()
 
         # 清除首页的缓存数据
@@ -20,6 +20,7 @@ class BaseModelAdmin(admin.ModelAdmin):
         super().delete_model(request, obj)
 
         # 发出任务，让celery worker生成静态页面
+        from celery_tasks.tasks import generate_static_index_html
         generate_static_index_html.delay()
 
         # 清除首页的缓存数据

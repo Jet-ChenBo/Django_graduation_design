@@ -59,7 +59,6 @@ class RegisterView(View):
         user = User.objects.create_user(username, email, password)
         user.is_active = 0  # 初始状态未激活，需要到邮箱验证激活
         user.save()
-
         # 发送激活用户账号的邮件, /user/active/用户id（需要加密）
         # 加密id
         serilalizer = Serializer(settings.SECRET_KEY, 3600)
@@ -114,10 +113,13 @@ class LoginView(View):
             return render(request, 'login.html', {'errmsg': '数据不完整'})
 
         # 用户认证
-        user = authenticate(username = username, password=password)
-        if user is not None:
-            # 认证成功
-            if user.is_active:
+        user = User.objects.get(username=username)
+        if not user.is_active:
+            return render(request, 'login.html', {'errmsg': '用户未激活'})
+        else:
+            user = authenticate(username = username, password=password)
+            if user is not None:
+                # 认证成功
                 login(request, user)
                 # 获取登录后要跳转的网页，默认为首页
                 next_url = request.GET.get('next', reverse('goods:index'))
@@ -129,9 +131,7 @@ class LoginView(View):
                     response.delete_cookie('username')
                 return response
             else:
-                return render(request, 'login.html', {'errmsg': '用户未激活'})
-        else:
-            return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
+                return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
 
 
 # /user/logout

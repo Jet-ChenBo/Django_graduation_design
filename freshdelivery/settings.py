@@ -24,9 +24,9 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))  # 将应用目录作为加�
 SECRET_KEY = '^3!3r#dz70o5-(2xu^x2femy9eph-&@4_@nl5n_pk_#i(u(k2g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'order',  # 订单模块
     'cart',  # 购物车模块
     'haystack',  # 全文搜索框架
-    'user.templatetags.filter',
+    'user.templatetags.filter',  # 模板方法
 ]
 
 MIDDLEWARE = [
@@ -135,6 +135,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# 收集的静态文件存放的路径
+STATIC_ROOT = '/home/cb/freshdelivery_static'
 
 # 发送邮件配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

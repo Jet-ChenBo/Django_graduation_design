@@ -325,6 +325,12 @@ class CheckPayView(View):
                 order.order_status = 4  # 待评价
                 order.save()
 
+                # 增加用户积分
+                order_goods = OrderGoods.objects.filter(order=order_id)
+                for goods in order_goods:
+                    user.points += int(goods.sku.points) * int(goods.count)
+                user.save()
+
                 return JsonResponse({'res':3, 'msg':'支付成功'})
 
             elif code == '40004' or (code == '10000' and trade_status == 'WAIT_BUYER_PAY'):

@@ -2,7 +2,6 @@ from celery import Celery
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template import loader
-from goods.models import GoodsType,IndexGoodsBanner,IndexTypeGoodsBanner
 
 # 因任务处理者也是用这段代码，所以需要添加环境变量
 import os
@@ -27,6 +26,7 @@ def send_register_active_emali(to_email, username, token):
                           ''' % (username, token)  # 正文，可以传html标签
     send_mail(subject, message, sender, receiver, html_message=html_message)
 
+from goods.models import GoodsType,IndexGoodsBanner,IndexTypeGoodsBanner
 
 @app.task
 def generate_static_index_html():
@@ -61,6 +61,6 @@ def generate_static_index_html():
     static_index_html = temp.render(context)
 
     # 生成首页对应的静态文件
-    save_path = '/home/cb/delivery_static/index.html'
+    save_path = '/home/cb/freshdelivery_static/index.html'
     with open(save_path, 'w') as f:
         f.write(static_index_html)
